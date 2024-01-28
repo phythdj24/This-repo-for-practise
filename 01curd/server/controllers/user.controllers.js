@@ -5,13 +5,13 @@ export const create = async(req, res)=>{
 
     try {
         
-        const userData = User(req.body);
+        const userData = new User(req.body);
         if (!userData) {
             res.status(404).json({msg: "Data Not Found"})
         }
 
         const savedData = await userData.save();
-        res.status(200).json({msg:"user Created sucesfully", data: savedData})
+        res.status(200).json(savedData)
 
 
     } catch (error) {

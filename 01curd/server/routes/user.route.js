@@ -5,6 +5,8 @@ import { create, deleteuser, getall, update } from "../controllers/user.controll
 const route = express.Router();
 
 
+
+
 route.post("/create", create)
 route.get("/getall", getall)
 route.put("/update/:id", update)
