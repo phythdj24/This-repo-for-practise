@@ -55,3 +55,43 @@ export const getoneUser = async(req,res)=>{
 
 
 }
+
+export const update =  async(req,res)=>{
+          try {
+
+            const id = req.params.id;
+
+            const userExist = await User.findById(id)
+
+            if (!userExist) {
+                res.status(404).json({msg: "User Dose Not Exist"})
+            }
+
+           const updateUser = await User.findByIdAndUpdate(id, req.body, {new:true})
+           res.status(200).json(updateUser)
+            
+          } catch (error) {
+            res.status(500).json({error: error})
+          }
+}
+
+export const deleteuser = async(req,res)=>{
+        
+   try {
+     const id = req.params.id;
+ 
+             const userExist = await User.findById(id)
+ 
+             if (!userExist) {
+                 res.status(404).json({msg: "User Dose Not Exist"})
+             }
+ 
+            await User.findByIdAndDelete(id)
+             res.status(200).json({msg: "User deleted succesfuly"})
+   } catch (error) {
+    res.status(500).json({error: error})
+   }
+
+
+
+}
