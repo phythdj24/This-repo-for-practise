@@ -1,6 +1,24 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const GetUser = () => {
+
+
+  const [users, setUsers] = useState([])
+
+  useEffect(()=>{
+     
+
+    const FetchData =async()=>{
+       const res = await axios.get('http://localhost:8000/api/getall')
+       setUsers(res.data)
+    }
+
+    FetchData()
+
+  },[])
+
   return (
     <div>
 
@@ -10,25 +28,38 @@ const GetUser = () => {
 
 <tr>
     <th>S.NO</th>
-    <th>FirstName</th>
-    <th>LastNamel</th>
+    <th>Fullanme</th>
     <th>email</th>
-    <th>Passowrd</th>
+    <th>Actions</th>
 </tr>
 </thead>
 
 <tbody>
 
-    <tr>
-         <td>1</td>
-        <td>sangam</td>
-        <td>dalla</td>
-        <td>sanag@123</td>
-        <td>12334</td>
+  {
+    users.map((user,index)=>{
+      return (
+                                 <tr key={user._id}>
+                                <td>{index + 1}</td>
+                                <td>{user.firstname} {user.lastname} </td>
+                                <td>{user.email}</td>
+                                <td>
+                                  <button>delete</button>
+                                <Link to={`/edit/`+user._id}>
+                                  <button>Edit</button>
+                                  </Link>
+                                </td>
 
 
 
-    </tr>
+   </tr>
+
+      )
+    })
+
+  }
+
+    
 
 
 </tbody>

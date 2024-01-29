@@ -5,6 +5,8 @@ import {RouterProvider, createBrowserRouter} from 'react-router-dom'
 import './App.css'
 import AddUser from './components/AddUser'
 import GetUser from './components/GetUser'
+import EditUser from './components/EditUser'
+
 
 function App() {
 
@@ -17,9 +19,10 @@ function App() {
         path: '/create',
         element: <AddUser />
        },
+
        {
-        path: '/edit',
-        element:'editpage'
+        path: '/edit/:id',
+        element: <EditUser />
        },
       
   ])

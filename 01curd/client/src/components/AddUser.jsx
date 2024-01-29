@@ -1,30 +1,27 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-
+import React, {useState } from "react";
+import axios from 'axios';
 
 
 const AddUser = () => {
 
-    const user = {
+    const users = {
         firstname: "",
         lastname: "",
         email: "",
         password: "",
       };
 
-  const [users, setUsers] = useState(user);
-
- 
+  const [user, setUser] = useState(users);
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
-    setUsers({ ...user, [name]: value });
+    setUser({ ...user, [name]:value });
   };
 
-  const submitForm = async (e) => {
+  const submitForm = async(e) => {
     e.preventDefault();
     await axios
-      .post("http://localhost:8000/api/create", users)
+      .post("http://localhost:8000/api/create", user)
       .then((response) => {
         console.log(response);
       })
