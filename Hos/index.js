@@ -2,6 +2,7 @@ import bodyParser from 'body-parser'
 import express from 'express'
 import router from './src/routes/homerouter.js'
 import mongoose from 'mongoose'
+import authrouter from './src/routes/authRouter.js'
 
 const app = express()
 
@@ -12,6 +13,7 @@ mongoose.connect('mongodb://localhost:27017/hospital').then((response)=> {
 }).catch((err)=> console.log(err, "Database error"))
 
 app.use('/api/v1/user', router)
+app.use('/api/v1/auth', authrouter)
 
 const PORT = 8080;
 
