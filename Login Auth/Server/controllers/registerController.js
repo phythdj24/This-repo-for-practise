@@ -1,5 +1,6 @@
 import { Register } from '../models/UserSchema.js'
 import bcrypt from "bcrypt"
+import jwt from 'jsonwebtoken'
 
 export const registerUser = async(req,res)=>{
         
@@ -22,12 +23,20 @@ export const registerUser = async(req,res)=>{
 
         var salt = bcrypt.genSaltSync(10)
         const hashPassword = await bcrypt.hash(password, salt)
+
+        const token = jwt.sign({ userId: userExist._id }, 'your-secret-key', {
+            expiresIn: '1h',
+            });
         
          await Register.create({name,username,email,password:hashPassword})
          res.status(200,).json({
             success:true,
-            msg:"User Registerd Successfull"
+            msg:"User Registerd Successfull",
+            userExist,
+            token
          })
+
+         
     
     } catch (error) {
         console.log(error);
@@ -65,11 +74,17 @@ export const loginController = async(req,res)=>{
                 msg:"Password Is Incorrect"
             })
          }
+         const token = jwt.sign({ userId: userExist._id }, 'your-secret-key', {
+            expiresIn: '1h',
+            });
+
+
          userExist.password = undefined;
 
          res.status(200).send({
           success: true,
           msg:'Login Succesfully',
+          token,
           userExist,
           
 
