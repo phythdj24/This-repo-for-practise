@@ -13,9 +13,11 @@ const server = http.createServer(app)
 const io = new Server(server)
 
 //Socket Io
-io.on('connection', (client)=>{
-    
-})
+io.on('connection', (socket) => {
+    socket.on('chat message', (msg) => {
+      io.emit('chat message', msg);
+    });
+  });
 
 app.get('/',(req,res)=>{
     return res.sendFile(path.join(__dirname, 'public', 'index.html'));
