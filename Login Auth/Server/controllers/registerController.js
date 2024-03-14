@@ -23,10 +23,18 @@ export const registerUser = async(req,res)=>{
 
         var salt = bcrypt.genSaltSync(10)
         const hashPassword = await bcrypt.hash(password, salt)
+        let token;
 
-        const token = jwt.sign({ userId: userExist._id }, 'your-secret-key', {
-            expiresIn: '1h',
+        
+        if (userExist) {
+             token = jwt.sign({ userId: userExist._id }, 'your-secret-key', {
+                expiresIn: '1h',
             });
+            // Use the token or handle further logic here
+        } else {
+            // Handle the case where userExist is null
+            console.error("User does not exist");
+        }
         
          await Register.create({name,username,email,password:hashPassword})
          res.status(200,).json({
